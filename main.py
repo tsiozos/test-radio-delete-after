@@ -13,9 +13,11 @@ for i in range(100):
 
 def on_button_pressed_a():
     global dat
-    for i in range(100):
-        dat[0]=i
-        radio.send_buffer(dat)
+    for j in range(10):
+        for i in range(100):
+            dat[0]=i
+            radio.send_buffer(dat)
+            basic.pause(10)
         
 input.on_button_pressed(Button.A, on_button_pressed_a)
 
@@ -25,15 +27,15 @@ def on_button_pressed_a2():
     for i in range(100):
         tot += rcvd[i]
     print ("Received: "+str(tot)+serial.NEW_LINE)
-    print ("NOT received:"+serial.NEW_LINE)
+    print ("NOT FULLY received:"+serial.NEW_LINE)
     for i in range(100):
-        if rcvd[i] == 0:
-            print(str(i)+serial.NEW_LINE)
+        if rcvd[i] < 10:
+            print(str(i) + ": " + str(rcvd[i]) + " times" + serial.NEW_LINE)
 
 input.on_button_pressed(Button.B, on_button_pressed_a2)
 
 def on_received_buffer(receivedBuffer):
     global rcvd
-    rcvd[receivedBuffer[0]] = 1
+    rcvd[receivedBuffer[0]] += 1
     led.toggle(2,2)
 radio.on_received_buffer(on_received_buffer)

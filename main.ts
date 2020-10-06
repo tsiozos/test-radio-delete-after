@@ -11,9 +11,12 @@ for (i = 0; i < 100; i++) {
 }
 input.onButtonPressed(Button.A, function on_button_pressed_a() {
     
-    for (let i = 0; i < 100; i++) {
-        dat[0] = i
-        radio.sendBuffer(dat)
+    for (let j = 0; j < 10; j++) {
+        for (let i = 0; i < 100; i++) {
+            dat[0] = i
+            radio.sendBuffer(dat)
+            basic.pause(10)
+        }
     }
 })
 input.onButtonPressed(Button.B, function on_button_pressed_a2() {
@@ -25,16 +28,16 @@ input.onButtonPressed(Button.B, function on_button_pressed_a2() {
         tot += rcvd[i]
     }
     console.log("Received: " + ("" + tot) + serial.NEW_LINE)
-    console.log("NOT received:" + serial.NEW_LINE)
+    console.log("NOT FULLY received:" + serial.NEW_LINE)
     for (i = 0; i < 100; i++) {
-        if (rcvd[i] == 0) {
-            console.log("" + i + serial.NEW_LINE)
+        if (rcvd[i] < 10) {
+            console.log("" + i + ": " + ("" + rcvd[i]) + " times" + serial.NEW_LINE)
         }
         
     }
 })
 radio.onReceivedBuffer(function on_received_buffer(receivedBuffer: Buffer) {
     
-    rcvd[receivedBuffer[0]] = 1
+    rcvd[receivedBuffer[0]] += 1
     led.toggle(2, 2)
 })
