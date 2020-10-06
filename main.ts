@@ -36,4 +36,5 @@ input.onButtonPressed(Button.B, function on_button_pressed_a2() {
 radio.onReceivedBuffer(function on_received_buffer(receivedBuffer: Buffer) {
     
     rcvd[receivedBuffer[0]] = 1
+    led.toggle(2, 2)
 })

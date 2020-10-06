@@ -35,4 +35,5 @@ input.on_button_pressed(Button.B, on_button_pressed_a2)
 def on_received_buffer(receivedBuffer):
     global rcvd
     rcvd[receivedBuffer[0]] = 1
+    led.toggle(2,2)
 radio.on_received_buffer(on_received_buffer)
